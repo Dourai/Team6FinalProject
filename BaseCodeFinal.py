@@ -70,39 +70,56 @@ class ManagerDashboard(EmployeeDashboard):
         # Open management options menu for the manager
         print("Management options menu opened")
 
-# Main function to run the program
+def create_employee():
+    # Function to create an employee object
+    employee_id = input("Enter employee ID: ")
+    name = input("Enter employee name: ")
+    department = input("Enter department: ")
+    wage = float(input("Enter wage: "))
+    tenure = int(input("Enter tenure: "))
+    avg_hours_per_week = int(input("Enter average hours per week: "))
+    return Employee(employee_id, name, department, wage, tenure, avg_hours_per_week)
+
 def main():
     while True:
-        # Prompt user to enter employee ID
-        employee_id = input("Enter your employee ID (or 'exit' to quit): ")
+        try:
+            # Prompt user to enter employee ID
+            employee_id = input("Enter your employee ID (or 'exit' to quit): ")
 
-        # Check if the user wants to exit
-        if employee_id.lower() == 'exit':
-            print("Exiting the program...")
-            break
+            # Check if the user wants to exit
+            if employee_id.lower() == 'exit':
+                print("Exiting the program...")
+                break
+            
+            # Validate employee ID
+            if not employee_id.isdigit() or len(employee_id) != 6:
+                raise ValueError("Invalid employee ID. Please enter a 6-digit numeric ID.")
 
-        # Create an employee based on entered employee ID
-        employee1 = Employee(employee_id, "John Doe", "Mechanical", 15.50, 2, 40)
+            # Create an employee based on entered employee ID
+            employee1 = Employee(employee_id, "John Doe", "Mechanical", 15.50, 2, 40)
 
-        # Create a schedule for the employee
-        shift1 = Shift("8:00 AM", "12:00 PM")
-        shift2 = Shift("1:00 PM", "5:00 PM")
-        schedule = Schedule(employee1, [shift1, shift2])
+            # Create a schedule for the employee
+            shift1 = Shift("8:00 AM", "12:00 PM")
+            shift2 = Shift("1:00 PM", "5:00 PM")
+            schedule = Schedule(employee1, [shift1, shift2])
 
-        # Create a department
-        department1 = Department("Mechanical", [employee1])
+            # Create a department
+            department1 = Department("Mechanical", [employee1])
 
-        # Create an employee dashboard
-        dashboard = EmployeeDashboard(employee1)
-        dashboard.display_information()
+            # Create an employee dashboard
+            dashboard = EmployeeDashboard(employee1)
+            dashboard.display_information()
 
-        # Check if the employee is a manager
-        is_manager = True  # Assume the employee is a manager
+            # Check if the employee is a manager
+            is_manager = True  # Assume the employee is a manager
 
-        # Open management options if the user is a manager
-        if is_manager:
-            manager_dashboard = ManagerDashboard(employee1)
-            manager_dashboard.open_management_options()
+            # Open management options if the user is a manager
+            if is_manager:
+                manager_dashboard = ManagerDashboard(employee1)
+                manager_dashboard.open_management_options()
+
+        except ValueError as ve:
+            print("Error:", ve)
 
 if __name__ == "__main__":
     main()
