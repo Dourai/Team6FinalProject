@@ -1,3 +1,6 @@
+from openpyxl import load_workbook
+import pandas as pd
+
 class Employee:
     def __init__(self, employee_id, name, department, wage, tenure, avg_hours_per_week):
         # Initialize employee attributes
@@ -70,53 +73,117 @@ class ManagerDashboard(EmployeeDashboard):
         # Open management options menu for the manager
         print("Management options menu opened")
 
-def create_employee():
+def import_employees_from_excel(file_path):
+    # Read data from Excel file
+    df = pd.read_excel(file_path)
+
+    # Process the data and return it
+    return df.values.tolist()
+
+def validate_employee_name(name, employee_data):
+    # Validate uniqueness of employee name
+    for data in employee_data:
+        if data[1].lower() == name.lower():
+            return False, "Employee name already exists. Please enter a different name."
+    return True, ""
+
+def create_employee(employee_data):
     # Function to create an employee object
-    employee_id = input("Enter employee ID: ")
-    name = input("Enter employee name: ")
+    last_id = int(employee_data[-1][0]) if employee_data else 100010
+    new_employee_id = str(last_id + 1)
+
+    while True:
+        name = input("Enter employee name: ")
+        valid_name, name_error = validate_employee_name(name, employee_data)
+        if valid_name:
+            break
+        else:
+            print("Error:", name_error)
+
     department = input("Enter department: ")
     wage = float(input("Enter wage: "))
     tenure = int(input("Enter tenure: "))
     avg_hours_per_week = int(input("Enter average hours per week: "))
-    return Employee(employee_id, name, department, wage, tenure, avg_hours_per_week)
+    return Employee(new_employee_id, name, department, wage, tenure, avg_hours_per_week)
+
+def append_employee_to_excel(employee, file_path):
+    # Load existing data from Excel
+    df = pd.read_excel(file_path)
+
+    # Append new employee data
+    new_row = [employee.employee_id, employee.name, employee.department, employee.wage, employee.tenure, employee.avg_hours_per_week]
+    df.loc[len(df)] = new_row
+
+    # Write back to Excel
+    df.to_excel(file_path, index=False)
 
 def main():
+    # Load existing employee data from Excel
+    file_path = "employee_data.xlsx"
+    employee_data = import_employees_from_excel(file_path)
+    
     while True:
         try:
-            # Prompt user to enter employee ID
-            employee_id = input("Enter your employee ID (or 'exit' to quit): ")
+            # Prompt user for action choice
+            action = input("Enter '1' to create a new employee, '2' to access existing data, or 'exit' to quit: ")
 
             # Check if the user wants to exit
-            if employee_id.lower() == 'exit':
+            if action.lower() == 'exit':
                 print("Exiting the program...")
                 break
             
-            # Validate employee ID
-            if not employee_id.isdigit() or len(employee_id) != 6:
-                raise ValueError("Invalid employee ID. Please enter a 6-digit numeric ID.")
+            if action == '1':
+                # Create a new employee
+                new_employee = create_employee(employee_data)
 
-            # Create an employee based on entered employee ID
-            employee1 = Employee(employee_id, "John Doe", "Mechanical", 15.50, 2, 40)
+                # Add the new employee to the Excel file
+                append_employee_to_excel(new_employee, file_path)
+                print("Employee added successfully!")
 
-            # Create a schedule for the employee
-            shift1 = Shift("8:00 AM", "12:00 PM")
-            shift2 = Shift("1:00 PM", "5:00 PM")
-            schedule = Schedule(employee1, [shift1, shift2])
+            elif action == '2':
+                # Prompt user to enter employee ID
+                employee_id = input("Enter your employee ID (or 'exit' to quit): ")
 
-            # Create a department
-            department1 = Department("Mechanical", [employee1])
+                # Check if the user wants to exit
+                if employee_id.lower() == 'exit':
+                    print("Exiting the program...")
+                    break
+                
+                # Validate employee ID
+                if not employee_id.isdigit() or len(employee_id) != 6:
+                    raise ValueError("Invalid employee ID. Please enter a 6-digit numeric ID.")
 
-            # Create an employee dashboard
-            dashboard = EmployeeDashboard(employee1)
-            dashboard.display_information()
+                # Find employee data in spreadsheet from entered employee ID
+                employee_info = None
+                for data in employee_data:
+                    if str(data[0]) == employee_id:
+                        employee_info = data
+                        break
+                if employee_info is None:
+                    raise ValueError("Employee ID not found in records.")
 
-            # Check if the employee is a manager
-            is_manager = True  # Assume the employee is a manager
+                # Create an employee object with loaded data
+                employee1 = Employee(*employee_info)
 
-            # Open management options if the user is a manager
-            if is_manager:
-                manager_dashboard = ManagerDashboard(employee1)
-                manager_dashboard.open_management_options()
+                # Create a schedule for the employee
+                shift1 = Shift("8:00 AM", "12:00 PM")
+                shift2 = Shift("1:00 PM", "5:00 PM")
+                schedule = Schedule(employee1, [shift1, shift2])
+
+                # Create a department
+                department1 = Department("Mechanical", [employee1])
+
+                # Create an employee dashboard
+                dashboard = EmployeeDashboard(employee1)
+                dashboard.display_information()
+
+                # Check if the employee is a manager
+                is_manager = True  # Assume the employee is a manager
+
+                # Open management options if the user is a manager
+                if is_manager:
+                    manager_dashboard = ManagerDashboard(employee1)
+                    manager_dashboard.open_management_options()
 
         except ValueError as ve:
             print("Error:", ve)
