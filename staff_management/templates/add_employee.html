@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Employee</title>
+    <style>
+        /* CSS styles */
+        h1 {
+            background-color: #3498db;
+            color: black;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+        }
+
+        .input-field {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Add Employee</h1>
+
+    <div>
+        <img src="newuser.png" alt="New User Image" style="width: 200px; height: auto;">
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <form action="{% url 'confirm_add_employee' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="employee_id" placeholder="Enter Employee ID" class="input-field">
+            <button type="submit" class="button">Confirm</button>
+        </form>
+    </div>
+</body>
+
+</html>
