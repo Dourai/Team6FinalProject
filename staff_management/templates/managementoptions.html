@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Management Options</title>
+    <style>
+        /* CSS styles */
+        h1 {
+            background-color: #3498db;
+            color: black;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Management Options</h1>
+
+    <div>
+        <img src="options.png" alt="Options Image" style="width: 200px; height: auto;">
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="{% url 'add_employee' %}" class="button">Add New Employee</a>
+        <a href="{% url 'remove_employee' %}" class="button">Remove Existing Employee</a>
+    </div>
+</body>
+
+</html>
