@@ -2,9 +2,33 @@
 <html>
 <head>
     <title>{{ title }}</title>
+    <style>
+        /* CSS styles */
+        body {
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #3498db;
+            color: black;
+            padding: 20px;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px; 
+        }
+
+        .content-container {
+            text-align: center;
+            font-size: 30px; 
+        }
+    </style>
 </head>
 <body>
     <h1>{{ heading }}</h1>
-    <p>{{ content }}</p>
+    <div class="content-container">
+        <p>{{ content }}</p>
+    </div>
 </body>
 </html>

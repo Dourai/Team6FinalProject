@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Information</title>
+    <style>
+        /* CSS styles */
+        body {
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #3498db;
+            color: black;
+            padding: 20px;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px; /* Add margin to separate from the content */
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Align items vertically */
+        }
+
+        .info-content {
+            background-color: #ffffff;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .info-item {
+            margin-bottom: 10px;
+        }
+
+        .info-label {
+            font-weight: bold;
+        }
+
+        .info-value {
+            margin-left: 10px;
+        }
+        
+        .error-message {
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>EMPLOYEE INFORMATION</h1>
+
+    <div class="main-container">
+        <div class="info-content">
+            <form class="search-form" method="post">
+                {% csrf_token %}
+                <input type="text" class="search-input" name="employee_id" placeholder="Enter employee ID" required>
+                <button type="submit" class="search-button">Search</button>
+            </form>
+            
+            {% if found %}
+            <div id="employee-info">
+                <div class="info-item">
+                    <span class="info-label">Name:</span>
+                    <span class="info-value">{{ employee.name }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Employee ID:</span>
+                    <span class="info-value">{{ employee.employee_id }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Tenure:</span>
+                    <span class="info-value">{{ employee.tenure }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Department:</span>
+                    <span class="info-value">{{ employee.department }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Wage:</span>
+                    <span class="info-value">{{ employee.wage }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Average Hours Per Week:</span>
+                    <span class="info-value">{{ employee.avg_hours_per_week }}</span>
+                </div>
+            </div>
+            {% elif found is not None %}
+            <p class="error-message">Employee not found. Please check the employee ID and try again.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
