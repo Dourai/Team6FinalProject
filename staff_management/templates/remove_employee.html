@@ -11,6 +11,24 @@
             padding: 20px;
             text-align: center;
         }
+
+        /* Additional styles for back button */
+        .back-button {
+            position: absolute;
+            top: 30px; /* Adjusted to move down */
+            left: 30px; /* Adjusted to move right */
+            background-color: white;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #ccc; /* Change the hover background color */
+        }
     </style>
 </head>
 
@@ -20,6 +38,9 @@
     <div>
         <img src="removeuser.png" alt="Remove User Image" style="width: 200px; height: auto;">
     </div>
+
+    <!-- Back button -->
+    <a href="managementoptions.html" class="back-button">Back</a>
 
     <div style="text-align: center; margin-top: 20px;">
         <form id="removeEmployeeForm" method="post" action="/remove_employee">
