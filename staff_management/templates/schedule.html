@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schedule</title>
+    <!-- Linking to FullCalendar's CSS for styling the calendar -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@latest/main.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #3498db;
+            color: black;
+            padding: 20px;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .calendar-container {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        #calendar {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <h1>SCHEDULE</h1>
+    <div class="calendar-container">
+        <div id='calendar'></div>
+    </div>
+    <div class="button-container">
+        <button onclick="location.href='/request-schedule-change'">Request Schedule Change</button>
+    </div>
+    <!-- Linking to FullCalendar's JavaScript and Moment.js -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@latest/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@latest/min/moment.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var scheduleData = {"2024-04-29": "Work", "2024-05-01": "Work", "2024-05-03": "Work", "2024-05-05": "Unavailable"};
+
+            var events = [];
+            for (var date in scheduleData) {
+                events.push({
+                    title: scheduleData[date],
+                    start: date
+        });
+    }
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: events
+    });
+
+    calendar.render();
+});
+    </script>
+</body>
+</html>
