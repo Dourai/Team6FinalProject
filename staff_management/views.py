@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Employee
+from .models import Employee, Schedule, Shift
 
 def index(request):
     return redirect('/home')
@@ -64,4 +64,35 @@ def employee_information(request):
 
     return render(request, 'employee_info.html')
 
+def schedule(request):
+    # Sample data
+    schedule_data = {
+        "2024-04-29": "Work",
+        "2024-05-01": "Work",
+        "2024-05-03": "Work",
+        "2024-05-05": "Unavailable"
+    }
+
+    context = {
+        'title': 'Schedule',
+        'schedule_data': schedule_data,
+        'request_change_url': '/request-schedule-change',  # URL for requesting schedule change
+    }
+    return render(request, 'schedule.html', context)
+
+
+def request_schedule_change(request):
+    # Placeholder for handling schedule change requests
+    if request.method == 'POST':
+        # Process the form data for schedule change request
+        employee_id = request.POST.get('employee_id')
+        new_schedule_date = request.POST.get('new_schedule_date')
+        reason = request.POST.get('reason')
+
+        return redirect('/schedule')
+
+    context = {
+        'title': 'Request Schedule Change',
+    }
+    return render(request, 'request_schedule_change.html', context)
 
