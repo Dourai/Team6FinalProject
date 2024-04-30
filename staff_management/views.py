@@ -5,14 +5,6 @@ def index(request):
     return redirect('/home')
 
 def home(request):
-    context = {
-        'title': 'Home Page',
-        'heading': 'Staff Management System',
-        'content': 'The Staff Management System is designed to streamline employee management processes within an organization. It provides functionality for employees to access work-related information such as schedules, wages, tenure, and department details. Additionally, it facilitates clocking in and out for shifts.',
-    }
-    return render(request, 'index.html', context)
-
-def about(request):
     my_list = [
         ('Clock in', '/clock-in', 1), 
         ('Clock out', '/clock-out', 2),
@@ -20,7 +12,7 @@ def about(request):
         ('Employee Information', '/employee-info', 4),
         ('Management Options', '/management', 5),
     ] 
-    return render(request, 'about.html', {'my_list': my_list})
+    return render(request, 'index.html', {'my_list': my_list})
 
 def clock_in(request):
     success = False

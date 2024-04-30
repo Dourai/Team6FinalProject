@@ -50,6 +50,11 @@
             color: red;
             text-align: center;
         }
+
+        .back-button {
+            margin-top: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -93,6 +98,9 @@
             {% elif found is not None %}
             <p class="error-message">Employee not found. Please check the employee ID and try again.</p>
             {% endif %}
+            <div class="back-button">
+                <a href="{% url 'home' %}">Back to Main Page</a>
+            </div>
         </div>
     </div>
 </body>
