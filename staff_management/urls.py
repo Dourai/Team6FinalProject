@@ -22,7 +22,10 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('clock-in/', views.clock_in, name='clock_in'), 
     path('clock-out/', views.clock_out, name='clock_out'),
-    path('employee-info/', views.employee_information, name='employee_information'),  
+    path('employee-info/', views.employee_information, name='employee_information'),
+    path('schedule/', views.schedule, name='schedule'),
+    path('request-schedule-change/', views.request_schedule_change, name='request_schedule_change'),
+
 ]
 
 
