@@ -33,6 +33,24 @@
             border-radius: 5px;
             border: 1px solid #ccc;
         }
+
+        /* Additional styles for back button */
+        .back-button {
+            position: absolute;
+            top: 20px; /* Adjusted to align with the top of the background behind the title */
+            left: 20px;
+            background-color: white;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #ccc; /* Change the hover background color */
+        }
     </style>
 </head>
 
@@ -43,9 +61,12 @@
         <img src="newuser.png" alt="New User Image" style="width: 200px; height: auto;">
     </div>
 
+    <!-- Back button -->
+    <a href="managementoptions.html" class="button back-button">Back</a>
+
     <div style="text-align: center; margin-top: 20px;">
         <form action="{% url 'confirm_add_employee' %}" method="post">
-            {% csrf_token %}
+            
             <input type="text" name="employee_id" placeholder="Enter Employee ID" class="input-field">
             <button type="submit" class="button">Confirm</button>
         </form>

@@ -25,6 +25,24 @@
         .button:hover {
             background-color: #2980b9;
         }
+
+        /* Additional styles for back button */
+        .back-button {
+            position: absolute;
+            top: 20px; /* Adjusted to align with the top of the background behind the title */
+            left: 20px;
+            background-color: white;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #ccc; /* Change the hover background color */
+        }
     </style>
 </head>
 
@@ -35,9 +53,12 @@
         <img src="options.png" alt="Options Image" style="width: 200px; height: auto;">
     </div>
 
+    <!-- Back button -->
+    <a href="about.html" class="button back-button">Back</a>
+
     <div style="text-align: center; margin-top: 20px;">
-        <a href="{% url 'add_employee' %}" class="button">Add New Employee</a>
-        <a href="{% url 'remove_employee' %}" class="button">Remove Existing Employee</a>
+        <a href="add_employee.html" class="button">Add New Employee</a>
+        <a href="remove_employee.html" class="button">Remove Existing Employee</a>
     </div>
 </body>
 
