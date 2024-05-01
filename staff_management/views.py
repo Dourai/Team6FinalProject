@@ -14,6 +14,9 @@ def home(request):
     ] 
     return render(request, 'index.html', {'my_list': my_list})
 
+def management_options(request):
+    return render(request, 'managementoptions.html')
+
 def clock_in(request):
     success = False
     if request.method == 'POST':
@@ -87,4 +90,16 @@ def request_schedule_change(request):
         'title': 'Request Schedule Change',
     }
     return render(request, 'request_schedule_change.html', context)
+
+def update_employee(request):
+    return render(request, 'update_employee.html')
+
+def about(request):
+    return render(request, 'about.html')
+
+def add_employee(request):
+    return render(request, 'add_employee.html')
+
+def remove_employee(request):
+    return render(request, 'remove_employee.html')
 

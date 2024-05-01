@@ -53,10 +53,28 @@
         .form-container input[type="submit"]:hover {
             background-color: #2980b9;
         }
+
+        /* Additional styles for back button */
+        .back-button {
+            background-color: white;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #ccc; /* Change the hover background color */
+        }
     </style>
 </head>
 <body>
     <h1>REQUEST SCHEDULE CHANGE</h1>
+    <a href="#" class="back-button" onclick="history.back()">Back</a> <!-- Added back button -->
     <div class="form-container">
         <form method="post" action="">
             {% csrf_token %}
@@ -80,4 +98,3 @@
         });
     </script>
 </body>
-</html>

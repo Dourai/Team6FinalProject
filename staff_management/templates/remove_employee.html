@@ -14,9 +14,6 @@
 
         /* Additional styles for back button */
         .back-button {
-            position: absolute;
-            top: 30px; /* Adjusted to move down */
-            left: 30px; /* Adjusted to move right */
             background-color: white;
             color: black;
             padding: 10px 20px;
@@ -24,6 +21,8 @@
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
+            display: inline-block; /* Make the back button inline */
+            margin-bottom: 20px; /* Adjusted to add space between back button and other elements */
         }
 
         .back-button:hover {
@@ -40,7 +39,7 @@
     </div>
 
     <!-- Back button -->
-    <a href="managementoptions.html" class="back-button">Back</a>
+    <a href="#" class="back-button" onclick="window.history.back()">Back</a>
 
     <div style="text-align: center; margin-top: 20px;">
         <form id="removeEmployeeForm" method="post" action="/remove_employee">
