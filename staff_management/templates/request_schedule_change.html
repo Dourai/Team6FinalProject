@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Schedule Change</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        /* CSS styles */
+        body {
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            background-color: #3498db;
+            color: black;
+            padding: 20px;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .form-container {
+            width: 90%; 
+            max-width: 600px; 
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box; 
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="submit"],
+        .form-container input[type="date"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; 
+        }
+        .form-container input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-container input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        /* Additional styles for back button */
+        .back-button {
+            background-color: white;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #ccc; /* Change the hover background color */
+        }
+    </style>
+</head>
+<body>
+    <h1>REQUEST SCHEDULE CHANGE</h1>
+    <a href="#" class="back-button" onclick="history.back()">Back</a> <!-- Added back button -->
+    <div class="form-container">
+        <form method="post" action="">
+            {% csrf_token %}
+            <label for="reason">Reason for Schedule Change:</label>
+            <input type="text" id="reason" name="reason" required>
+            <label for="date">Date(s) Requested:</label>
+            <input type="text" id="date" name="new_schedule_date" placeholder="Select date(s)" required class="date-picker">
+            <input type="submit" value="Submit Request">
+        </form>
+    </div>
+    <!-- Flatpickr script for schedule dates -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>   
+    <script> 
+        flatpickr(".date-picker", {
+            enableTime: false,
+            dateFormat: "Y-m-d",
+            mode: "multiple",
+            altInput: true,
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d"
+        });
+    </script>
+</body>

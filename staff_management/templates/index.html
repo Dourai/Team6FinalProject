@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>About</title>
+</head>
+
+<style>
+    /* CSS styles */
+    h1 {
+      background-color: #3498db; 
+      color: black; 
+      padding: 20px; 
+      text-align: center; 
+    }
+
+    h2.date {
+        color: black; 
+        text-align: center;
+    }
+
+    .container {
+    display: flex; /* Use flexbox */
+    }
+  
+    .column {
+    flex: 1; /* Each column occupies equal width */
+    padding: 20px; 
+    }
+</style>
+
+<body>
+    <h1>Staff Management System</h1>
+
+    <div class="container">
+
+        <div class="column">
+            <div class="column">
+                <h2 class="date">Today's Date: {% now "jS F Y" %}</h2>
+            </div>
+            <img src="{% static 'clock_picture.jpg' %}">         
+        </div>
+
+        <div class="column">
+            <!-- Loop results at positions 1, 3, and 5 -->
+            <h2>
+            {% for item in my_list %}
+                {% if item.2 == 1 or item.2 == 3 or item.2 == 5 %}
+                    <div style="background-color: #3498db; padding: 20px; text-align: center; margin-bottom: 20px; margin-top: 20px;">
+                        <a href="{{ item.1 }}" style="color: black;">{{ item.0 }}</a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            </h2>
+        </div>
+
+        <div class="column">
+            <!-- Loop results excluding positions 1, 3, and 5 -->
+            <h2>
+            {% for item in my_list %}
+                {% if item.2 != 1 and item.2 != 3 and item.2 != 5 %}
+                    <div style="background-color: #3498db; padding: 20px; text-align: center; margin-bottom: 20px; margin-top: 20px;">
+                        <a href="{{ item.1 }}" style="color: black;">{{ item.0 }}</a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            </h2>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

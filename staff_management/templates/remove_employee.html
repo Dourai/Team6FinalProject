@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Remove Employee</title>
+    <style>
+        /* CSS styles */
+        h1 {
+            background-color: #3498db;
+            color: black;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Additional styles for back button */
+        .back-button {
+            background-color: white;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block; /* Make the back button inline */
+            margin-bottom: 20px; /* Adjusted to add space between back button and other elements */
+        }
+
+        .back-button:hover {
+            background-color: #ccc; /* Change the hover background color */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Remove Employee</h1>
+
+    <div>
+        <img src="removeuser.png" alt="Remove User Image" style="width: 200px; height: auto;">
+    </div>
+
+    <!-- Back button -->
+    <a href="#" class="back-button" onclick="window.history.back()">Back</a>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <form id="removeEmployeeForm" method="post" action="/remove_employee">
+            <input type="text" id="employeeId" name="employee_id" placeholder="Enter Employee ID">
+            <button type="submit" style="background-color: #3498db; color: white; padding: 10px 20px;">Confirm</button>
+        </form>
+    </div>
+</body>
+
+</html>

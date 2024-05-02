@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Management Options</title>
+    <style>
+        /* CSS styles */
+        h1 {
+            background-color: #3498db;
+            color: black;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            text-decoration: none; /* Remove underlines */
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Additional styles for back button */
+        .back-button {
+            background-color: white;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block; /* Make the back button inline */
+            margin-bottom: 20px; /* Adjusted to add space between back button and other buttons */
+        }
+
+        .back-button:hover {
+            background-color: #ccc; /* Change the hover background color */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Management Options</h1>
+
+    <div>
+        <img src="options.png" alt="Options Image" style="width: 200px; height: auto;">
+    </div>
+
+    <!-- Back button -->
+    <a href="#" class="button back-button" onclick="window.history.back()">Back</a>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="{% url 'add_employee' %}" class="button">Add New Employee</a>
+        <a href="{% url 'remove_employee' %}" class="button">Remove Existing Employee</a>
+        <a href="{% url 'update_employee' %}" class="button">Update Existing Employee</a>
+    </div>
+</body>
+
+</html>

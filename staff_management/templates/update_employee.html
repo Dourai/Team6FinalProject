@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Update Existing Employee</title>
+    <style>
+        /* CSS styles */
+        h1 {
+            background-color: #3498db;
+            color: black;
+            padding: 20px;
+            text-align: center;
+            margin-top: 0; /* Remove default margin */
+            margin-bottom: 10px; /* Adjusted to create space between title and form */
+            position: relative; /* Added to make h1 a positioning context */
+        }
+
+        .button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+        }
+
+        .input-field {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* Additional styles for back button */
+        .back-button {
+            background-color: white;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            position: absolute;
+            top: 20px; /* Adjusted to align with the top of the background behind the title */
+            left: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #ccc; /* Change the hover background color */
+        }
+
+        /* Style to center the form */
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 20px; /* Adjust this value to move the form up */
+        }
+
+        /* Style for the logo */
+        .logo {
+            position: absolute;
+            top: calc(20px + 88px); /* Adjusted to be slightly below the title border */
+            left: 20px;
+        }
+
+        .logo img {
+            width: 100px; /* Adjust the width as needed */
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Update Existing Employee</h1>
+
+    <!-- Back button -->
+    <a href="#" class="button back-button" onclick="window.history.back()">Back</a>
+
+    <!-- Logo -->
+    <div class="logo">
+        <img src="updateuser.png" alt="Logo">
+    </div>
+
+    <div style="text-align: center;" class="form-container">
+        <form action="#" method="post" style="margin-left: 20px;">
+            <input type="text" name="employee_id" placeholder="Enter Employee ID" class="input-field">
+            <button type="submit" class="button">Search</button>
+        </form>
+    </div>
+
+    <div style="text-align: center;" class="form-container">
+        <form action="#" method="post">
+            <input type="text" name="name" placeholder="Name" class="input-field"><br>
+            <input type="text" name="employee_id" placeholder="Employee ID" class="input-field"><br>
+            <input type="text" name="tenure" placeholder="Tenure" class="input-field"><br>
+            <input type="text" name="department" placeholder="Department" class="input-field"><br>
+            <input type="text" name="wage" placeholder="Wage" class="input-field"><br>
+            <input type="text" name="avg_hours" placeholder="Average Hours Per Week" class="input-field"><br>
+            <button type="submit" class="button">Update</button>
+        </form>
+    </div>
+</body>
+
+</html>
