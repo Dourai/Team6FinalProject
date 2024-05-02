@@ -55,6 +55,28 @@
             margin-top: 20px;
             text-align: center;
         }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: black;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
@@ -62,10 +84,13 @@
 
     <div class="main-container">
         <div class="info-content">
-            <form class="search-form" method="post">
+            <form method="post">
                 {% csrf_token %}
-                <input type="text" class="search-input" name="employee_id" placeholder="Enter employee ID" required>
-                <button type="submit" class="search-button">Search</button>
+                <label for="employee_id">Employee ID:</label>
+                <input type="text" id="employee_id" name="employee_id" placeholder="Enter employee ID" required><br><br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required><br><br>
+                <button type="submit">Search</button>
             </form>
             
             {% if found %}
