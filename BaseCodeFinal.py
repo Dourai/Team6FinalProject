@@ -1,3 +1,8 @@
+import sqlite3
+
+# Define database file path
+DB_FILE = 'employee_database.db'
+
 class Employee:
     def __init__(self, employee_id, name, department, wage, tenure, avg_hours_per_week):
         # Initialize employee attributes
@@ -70,15 +75,21 @@ class ManagerDashboard(EmployeeDashboard):
         # Open management options menu for the manager
         print("Management options menu opened")
 
-def create_employee():
-    # Function to create an employee object
-    employee_id = input("Enter employee ID: ")
-    name = input("Enter employee name: ")
-    department = input("Enter department: ")
-    wage = float(input("Enter wage: "))
-    tenure = int(input("Enter tenure: "))
-    avg_hours_per_week = int(input("Enter average hours per week: "))
-    return Employee(employee_id, name, department, wage, tenure, avg_hours_per_week)
+def fetch_employee_by_id(employee_id):
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+
+    # Get employee from the database by employee_id
+    c.execute("SELECT * FROM Employee WHERE employee_id = ?", (employee_id,))
+    employee_data = c.fetchone()
+
+    conn.close()
+
+    # If employee with the given ID is found, create an Employee object
+    if employee_data:
+        return Employee(*employee_data)
+    else:
+        return None
 
 def main():
     while True:
@@ -95,28 +106,39 @@ def main():
             if not employee_id.isdigit() or len(employee_id) != 6:
                 raise ValueError("Invalid employee ID. Please enter a 6-digit numeric ID.")
 
-            # Create an employee based on entered employee ID
-            employee1 = Employee(employee_id, "John Doe", "Mechanical", 15.50, 2, 40)
+            # Fetch employee by ID
+            employee = fetch_employee_by_id(employee_id)
+
+            if employee:
+                # Display information for the fetched employee
+                print("Employee Name:", employee.name)
+                print("Employee ID:", employee.employee_id)
+                print("Department:", employee.department)
+                print("Wage:", employee.wage)
+                print("Tenure:", employee.tenure)
+                print("Average Hours Per Week:", employee.avg_hours_per_week)
+                print()
+
+                # Check if the employee is in the Manager department
+                if employee.department == "Manager":
+                    # Create an employee dashboard
+                    dashboard = EmployeeDashboard(employee)
+                    dashboard.display_information()
+
+                    # Open management options if the user is a manager
+                    manager_dashboard = ManagerDashboard(employee)
+                    manager_dashboard.open_management_options()
+
+            else:
+                print("Employee not found.")
 
             # Create a schedule for the employee
             shift1 = Shift("8:00 AM", "12:00 PM")
             shift2 = Shift("1:00 PM", "5:00 PM")
-            schedule = Schedule(employee1, [shift1, shift2])
+            schedule = Schedule(employee, [shift1, shift2])
 
             # Create a department
-            department1 = Department("Mechanical", [employee1])
-
-            # Create an employee dashboard
-            dashboard = EmployeeDashboard(employee1)
-            dashboard.display_information()
-
-            # Check if the employee is a manager
-            is_manager = True  # Assume the employee is a manager
-
-            # Open management options if the user is a manager
-            if is_manager:
-                manager_dashboard = ManagerDashboard(employee1)
-                manager_dashboard.open_management_options()
+            department1 = Department("Mechanical", [employee])
 
         except ValueError as ve:
             print("Error:", ve)
