@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import Employee, Schedule, Shift
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return redirect('/home')
 
+@login_required
 def home(request):
     my_list = [
         ('Clock in', '/clock-in', 1), 
@@ -14,21 +16,25 @@ def home(request):
     ] 
     return render(request, 'index.html', {'my_list': my_list})
 
+@login_required
 def management_options(request):
     return render(request, 'managementoptions.html')
 
+@login_required
 def clock_in(request):
     success = False
     if request.method == 'POST':
         success = True  # For demonstration purposes
     return render(request, 'clock_in.html', {'success': success})
 
+@login_required
 def clock_out(request):
     success = False
     if request.method == 'POST':
         success = True  # For demonstration purposes
     return render(request, 'clock_out.html', {'success': success})
 
+@login_required
 def employee_information(request):
     # Sample data for demonstration
     sample_employee = {
@@ -59,6 +65,7 @@ def employee_information(request):
 
     return render(request, 'employee_info.html')
 
+@login_required
 def schedule(request):
     # Sample data
     schedule_data = {
@@ -75,7 +82,7 @@ def schedule(request):
     }
     return render(request, 'schedule.html', context)
 
-
+@login_required
 def request_schedule_change(request):
     # Placeholder for handling schedule change requests
     if request.method == 'POST':
@@ -91,11 +98,14 @@ def request_schedule_change(request):
     }
     return render(request, 'request_schedule_change.html', context)
 
+@login_required
 def update_employee(request):
     return render(request, 'update_employee.html')
 
+@login_required
 def about(request):
     return render(request, 'about.html')
+
 
 def add_employee(request):
     return render(request, 'add_employee.html')

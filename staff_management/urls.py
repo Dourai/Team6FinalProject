@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import path
 from django.contrib import admin
 from . import views
+from django.contrib.auth import views as djangoViews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,4 +32,6 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('add-employee/', views.add_employee, name='add_employee'),
     path('remove-employee/', views.remove_employee, name='remove_employee'),
+    path('accounts/login/', djangoViews.LoginView.as_view(), name='login'),
+    path('accounts/logout/', djangoViews.LogoutView.as_view(next_page='/'), name='logout'),
 ]
