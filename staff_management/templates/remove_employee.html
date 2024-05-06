@@ -1,52 +1,102 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Remove Employee</title>
+    <!-- CSS styles -->
     <style>
         /* CSS styles */
+        body {
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
         h1 {
             background-color: #3498db;
             color: black;
             padding: 20px;
             text-align: center;
+            margin-top: 0;
         }
 
-        /* Additional styles for back button */
-        .back-button {
-            background-color: white;
-            color: black;
-            padding: 10px 20px;
-            border: none;
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
             border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block; /* Make the back button inline */
-            margin-bottom: 20px; /* Adjusted to add space between back button and other elements */
+            margin-top: 20px; 
         }
 
-        .back-button:hover {
-            background-color: #ccc; /* Change the hover background color */
+        .form-container h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: black;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+            display: {% if error_message %}block{% else %}none{% endif %};
+        }
+
+        .back-button {
+            margin-top: 20px;
+            text-align: center;
         }
     </style>
 </head>
-
 <body>
-    <h1>Remove Employee</h1>
+    <h1>REMOVE EMPLOYEE</h1>
 
-    <div>
-        <img src="removeuser.png" alt="Remove User Image" style="width: 200px; height: auto;">
-    </div>
-
-    <!-- Back button -->
-    <a href="#" class="back-button" onclick="window.history.back()">Back</a>
-
-    <div style="text-align: center; margin-top: 20px;">
-        <form id="removeEmployeeForm" method="post" action="/remove_employee">
-            <input type="text" id="employeeId" name="employee_id" placeholder="Enter Employee ID">
-            <button type="submit" style="background-color: #3498db; color: white; padding: 10px 20px;">Confirm</button>
-        </form>
+    <div class="container">
+        <div class="form-container">
+            <h2>Remove Employee</h2>
+            <form action="/remove-employee/" method="post"> <!-- Updated form action -->
+                {% csrf_token %}
+                <label for="employee_id">Employee ID:</label>
+                <input type="text" id="employee_id" name="employee_id" required><br><br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br><br>
+                <button type="submit">Remove Employee</button>
+            </form>
+            <div class="error-message">{{ error_message }}</div>
+            <div class="back-button">
+                <a href="{% url 'home' %}">Back to Main Page</a>
+            </div>
+        </div>
     </div>
 </body>
-
 </html>

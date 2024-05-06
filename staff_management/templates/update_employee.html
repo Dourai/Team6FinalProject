@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Update Existing Employee</title>
     <style>
@@ -81,7 +80,7 @@
     <h1>Update Existing Employee</h1>
 
     <!-- Back button -->
-    <a href="#" class="button back-button" onclick="window.history.back()">Back</a>
+    <a href="{% url 'management_options' %}" class="button back-button">Back to Management Options</a>
 
     <!-- Logo -->
     <div class="logo">
@@ -89,23 +88,26 @@
     </div>
 
     <div style="text-align: center;" class="form-container">
-        <form action="#" method="post" style="margin-left: 20px;">
+        <form action="{% url 'update_employee' %}" method="post" style="margin-left: 20px;">
+            {% csrf_token %}
             <input type="text" name="employee_id" placeholder="Enter Employee ID" class="input-field">
             <button type="submit" class="button">Search</button>
         </form>
     </div>
 
+    {% if employee %}
     <div style="text-align: center;" class="form-container">
-        <form action="#" method="post">
-            <input type="text" name="name" placeholder="Name" class="input-field"><br>
-            <input type="text" name="employee_id" placeholder="Employee ID" class="input-field"><br>
-            <input type="text" name="tenure" placeholder="Tenure" class="input-field"><br>
-            <input type="text" name="department" placeholder="Department" class="input-field"><br>
-            <input type="text" name="wage" placeholder="Wage" class="input-field"><br>
-            <input type="text" name="avg_hours" placeholder="Average Hours Per Week" class="input-field"><br>
+        <form action="{% url 'update_employee' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="employee_id" value="{{ employee.id }}">
+            <input type="text" name="name" value="{{ employee.name }}" placeholder="Name" class="input-field"><br>
+            <input type="text" name="tenure" value="{{ employee.tenure }}" placeholder="Tenure" class="input-field"><br>
+            <input type="text" name="department" value="{{ employee.department }}" placeholder="Department" class="input-field"><br>
+            <input type="text" name="wage" value="{{ employee.wage }}" placeholder="Wage" class="input-field"><br>
+            <input type="text" name="avg_hours_per_week" value="{{ employee.avg_hours_per_week }}" placeholder="Average Hours Per Week" class="input-field"><br>
             <button type="submit" class="button">Update</button>
         </form>
     </div>
+    {% endif %}
 </body>
-
 </html>
