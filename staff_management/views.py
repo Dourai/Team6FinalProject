@@ -6,13 +6,14 @@ from staff_management.forms import LoginForm
 from .models import Employee, Shift
 from datetime import datetime, date
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect
 
 
 def index(request):
     return redirect('/home')
 
-@login_required
+@login_required(login_url='/login')
 def home(request):
     my_list = [
         ('Clock in', '/clock-in', 1),
@@ -23,11 +24,11 @@ def home(request):
     ]
     return render(request, 'index.html', {'my_list': my_list})
 
-@login_required
+@login_required(login_url='/login')
 def management_options(request):
     return render(request, 'managementoptions.html')
 
-@login_required
+@login_required(login_url='/login')
 def clock_in(request):
     if request.method == 'POST':
         employee_id = request.POST.get('employee_id')
@@ -47,7 +48,7 @@ def clock_in(request):
     
     return render(request, 'clock_in.html')
 
-@login_required
+@login_required(login_url='/login')
 def clock_out(request):
     if request.method == 'POST':
         employee_id = request.POST.get('employee_id')
@@ -69,7 +70,7 @@ def clock_out(request):
     error_messages = [str(message) for message in messages.get_messages(request)]  # Convert messages to a list of strings
     return render(request, 'clock_out.html', {'error_message': error_messages})
 
-@login_required
+@login_required(login_url='/login')
 def employee_information(request):
     if request.method == 'POST':
         employee_id = request.POST.get('employee_id')
@@ -97,7 +98,7 @@ def employee_information(request):
 
     return render(request, 'employee_info.html')
 
-@login_required
+@login_required(login_url='/login')
 def schedule(request):
     # Sample data
     schedule_data = {
@@ -129,7 +130,7 @@ def request_schedule_change(request):
     }
     return render(request, 'request_schedule_change.html', context)
 
-@login_required
+@login_required(login_url='/login')
 def update_employee(request):
     if request.method == 'POST':
         employee_id = request.POST.get('employee_id')
@@ -208,3 +209,8 @@ def login_view(request):
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')

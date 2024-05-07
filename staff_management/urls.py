@@ -33,5 +33,5 @@ urlpatterns = [
     path('add_employee/', views.add_employee, name='add_employee'),
     path('remove-employee/', views.remove_employee, name='remove_employee'),
     path('login/', views.login_view, name='login'),
-    path('accounts/logout/', djangoViews.LogoutView.as_view(next_page='/'), name='logout'),
+    path('logout/', views.logout_view, name='logout'),
 ]
