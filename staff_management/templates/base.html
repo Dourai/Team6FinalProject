@@ -1,41 +1,59 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Clock In</title>
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        <style>
-            .header {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 28px 0;
-            }
-        </style>
-    </head>
-    <body>
-        <header class="container">
-            <div class="header">
-                <a href="/home"><h1>Staff Management</h1></a>
-            
-                {% if user.is_authenticated %}
-                <p style="display: flex; align-items: center; gap: 8px;">
-                    Hello <strong>{{ user.username }}</strong>
-                    <small>(<a href="{% url 'logout' %}">Log out</a>)</small>
-                </p>
-                {% else %}
-                    <a href="{% url 'login' %}"> Please login </a>
-                {% endif %}
-                
-            </div>
-            
-        </header>
 
-        <main class="container">
-            {% block content %} {% endblock %}
-        </main>
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clock In</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <style>
+        p {
+            margin: 0;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 28px 0;
+            gap: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="container">
+        <div class="header">
+            <a href="/home" style="margin-right: auto;">
+                <h1>Staff Management</h1>
+            </a>
+
+            {% if user.is_authenticated %}
+
+                {% if today_shift %}
+                        {% if today_shift.end_time %}
+                            <p>Today shift ended</p>
+                        {% else %}
+                            <p>Today shift is running</p>
+                        {% endif %}
+                    </p>
+                {% else %}
+                    <p>No shift data for today.</p>
+                {% endif %}
+
+                <span>|</span>
+                <p style="display: flex; align-items: center; gap: 8px;"> Hello <strong>{{ user.username }}</strong> <small>(<a href="{% url 'logout' %}">Log out</a>)</small> </p>
+            {% else %}
+                <a href="{% url 'login' %}"> Please login </a>
+            {% endif %}
+
+        </div>
+
+    </header>
+
+    <main class="container">
+        {% block content %} {% endblock %}
+    </main>
+</body>
+
 </html>

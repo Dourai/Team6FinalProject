@@ -18,12 +18,13 @@ from django.contrib import admin
 from . import views
 from django.contrib.auth import views as djangoViews
 
+
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('home', views.home, name='home'),
     path('', views.index, name='index'),
     path('management/', views.management_options, name='management_options'),
-    path('clock-in/', views.clock_in, name='clock_in'), 
+    path('clock-in/', views.clock_in, name='clock_in'),
     path('clock-out/', views.clock_out, name='clock_out'),
     path('employee-info/', views.employee_information, name='employee_information'),
     path('schedule/', views.schedule, name='schedule'),
@@ -32,6 +33,12 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('add_employee/', views.add_employee, name='add_employee'),
     path('remove-employee/', views.remove_employee, name='remove_employee'),
-    path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
+    path('accounts/login/', views.login_view, name='login'),
+    path('accounts/logout/', views.logout_view, name='logout'),
+    path('admin/login/', views.go_to_custom_login),
+    path('admin/logout/', views.go_to_custom_logout),
+    path('admin/', admin.site.urls),
 ]
+
+
+

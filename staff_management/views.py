@@ -5,30 +5,33 @@ from django.utils import timezone
 from staff_management.forms import LoginForm
 from .models import Employee, Shift
 from datetime import datetime, date
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
+from django.contrib.auth.forms import UserCreationForm
 
 
 def index(request):
     return redirect('/home')
 
-@login_required(login_url='/login')
+@login_required
 def home(request):
     my_list = [
         ('Clock in', '/clock-in', 1),
         ('Clock out', '/clock-out', 2),
         ('Schedule', '/schedule', 3),
         ('Employee Information', '/employee-info', 4),
-        ('Management Options', '/management', 5),
     ]
+    if request.user.is_superuser:
+        my_list.append(('Management Options', '/admin/staff_management/employee/', 5))
+
     return render(request, 'index.html', {'my_list': my_list})
 
-@login_required(login_url='/login')
+@login_required
 def management_options(request):
     return render(request, 'managementoptions.html')
 
-@login_required(login_url='/login')
+@login_required
 def clock_in(request):
     if request.method == 'POST':
         shift, created = request.user.shifts.get_or_create(date=date.today())
@@ -44,7 +47,7 @@ def clock_in(request):
     return render(request, 'clock_in.html', {'messages': messages.get_messages(request)})
 
 
-@login_required(login_url='/login')
+@login_required
 def clock_out(request):
     if request.method == 'POST':
         try:
@@ -61,35 +64,11 @@ def clock_out(request):
     return render(request, 'clock_out.html', {'messages': messages.get_messages(request)})
 
 
-@login_required(login_url='/login')
+@login_required
 def employee_information(request):
-    if request.method == 'POST':
-        employee_id = request.POST.get('employee_id')
-        password = request.POST.get('password')
-
-        try:
-            employee = Employee.objects.get(employee_id=employee_id)
-            if employee.password == password:
-                context = {
-                    'employee': employee,
-                    'found': True
-                }
-            else:
-                context = {
-                    'found': False,
-                    'error_message': 'Incorrect password.'
-                }
-        except Employee.DoesNotExist:
-            context = {
-                'found': False,
-                'error_message': 'Employee not found.'
-            }
-
-        return render(request, 'employee_info.html', context)
-
     return render(request, 'employee_info.html')
 
-@login_required(login_url='/login')
+@login_required
 def schedule(request):
     # Sample data
     schedule_data = {
@@ -121,7 +100,7 @@ def request_schedule_change(request):
     }
     return render(request, 'request_schedule_change.html', context)
 
-@login_required(login_url='/login')
+@login_required
 def update_employee(request):
     if request.method == 'POST':
         employee_id = request.POST.get('employee_id')
@@ -204,3 +183,24 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def add_employee(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('employee_list')
+    else:
+        form = UserCreationForm()
+    return render(request, 'add_employee.html', {'form': form})
+
+# We don't want to use the default Django login page, so we redirect to our custom login page
+def go_to_custom_login(request):
+    return redirect('/accounts/login')
+
+# We don't want to use the default Django logout page, so we redirect to our custom logout page
+def go_to_custom_logout(request):
+    return redirect('/accounts/logout')
