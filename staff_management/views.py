@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils import timezone
+
+from staff_management.forms import LoginForm
 from .models import Employee, Shift
 from datetime import datetime, date
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
 
 def index(request):
@@ -186,3 +190,21 @@ def remove_employee(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        print('aaaaa', form.is_valid())
+        if form.is_valid():
+            employee_id = form.cleaned_data.get('employee_id')
+            password = form.cleaned_data.get('password')
+            employee = authenticate(request, username=employee_id, password=password)
+            if employee is not None:
+                login(request, employee)
+                return redirect('home')
+            else:
+                form.add_error(None, 'Invalid employee ID or password')
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})

@@ -1,14 +1,14 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import User
 
-class Employee(models.Model):
+class Employee(User):
     name = models.CharField(max_length=100)
-    employee_id = models.CharField(max_length=20)
     tenure = models.IntegerField()
-    password = models.CharField(max_length=100)
     department = models.CharField(max_length=100)
     wage = models.DecimalField(max_digits=8, decimal_places=2)
     avg_hours_per_week = models.DecimalField(max_digits=5, decimal_places=2)
+
 
 class Schedule(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)

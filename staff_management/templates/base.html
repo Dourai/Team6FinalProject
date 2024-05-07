@@ -1,103 +1,99 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clock In</title>
-    <style>
-        /* CSS styles */
-        body {
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Clock In</title>
+        <style>
+            /* CSS styles */
+            body {
+                background-color: #f2f2f2;
+                margin: 0;
+                padding: 0;
+            }
 
-        h1 {
-            background-color: #3498db;
-            color: black;
-            padding: 20px;
-            text-align: center;
-            margin-top: 0;
-        }
+            h1 {
+                background-color: #3498db;
+                color: black;
+                padding: 20px;
+                text-align: center;
+                margin-top: 0;
+            }
 
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
-        .form-container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 5px;
-            margin-top: 20px; 
-        }
+            .form-container {
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 5px;
+                margin-top: 20px;
+            }
 
-        .form-container h2 {
-            margin-top: 0;
-        }
+            .form-container h2 {
+                margin-top: 0;
+            }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
 
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
+            input[type="text"],
+            input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                box-sizing: border-box;
+            }
 
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #3498db;
-            color: black;
-            border: none;
-            cursor: pointer;
-        }
+            button {
+                width: 100%;
+                padding: 10px;
+                background-color: #3498db;
+                color: black;
+                border: none;
+                cursor: pointer;
+            }
 
-        button:hover {
-            background-color: #2980b9;
-        }
+            button:hover {
+                background-color: #2980b9;
+            }
 
-        .success-message {
-            color: green;
-            text-align: center;
-            margin-top: 10px;
-            display: {% if success %}block{% else %}none{% endif %}; /* Show only if success is True */
-        }
+            .success-message {
+                color: green;
+                text-align: center;
+                margin-top: 10px;
+                display: {% if success %}block{% else %}none{% endif %}; /* Show only if success is True */
+            }
 
-        .back-button {
-            margin-top: 20px;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
+            .back-button {
+                margin-top: 20px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="page-header">
+            <div class="container">
+                {% if user.is_authenticated %}
+                <p>
+                    Hello {{ user.username }}
+                    <small>(<a href="{% url 'logout' %}">Log out</a>)</small>
+                </p>
+                {% else %}
+                    <a href="{% url 'login' %}"> Please login </a>
+                {% endif %}
+                <h1><a href="/">Home</a></h1>
+            </div>
+        </header>
 
-
-    <header class="page-header">
-        <div class="container">
-              {% if user.is_authenticated %}
-                  <p>Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
-              {% else %}
-                  <a href="{% url 'login' %}">
-                      Please login
-                  </a>
-              {% endif %}
-              <h1><a href="/">Home</a></h1>
-        </div>
-    </header>
-      
-    <main class="container">
-        <div class="form-container">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </main>
-</body>
+        <main class="container">
+            <div class="form-container">{% block content %} {% endblock %}</div>
+        </main>
+    </body>
 </html>
