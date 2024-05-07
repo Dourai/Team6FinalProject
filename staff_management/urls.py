@@ -27,6 +27,6 @@ urlpatterns = [
     path('request-schedule-change/', views.request_schedule_change, name='request_schedule_change'),
     path('update-employee/', views.update_employee, name='update_employee'),
     path('about/', views.about, name='about'),
-    path('add-employee/', views.add_employee, name='add_employee'),
+    path('add_employee/', views.add_employee, name='add_employee'),
     path('remove-employee/', views.remove_employee, name='remove_employee'),
 ]

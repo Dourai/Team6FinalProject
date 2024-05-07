@@ -120,8 +120,8 @@
                     <span class="info-value">{{ employee.avg_hours_per_week }}</span>
                 </div>
             </div>
-            {% elif found is not None %}
-            <p class="error-message">Employee not found. Please check the employee ID and try again.</p>
+            {% elif error_message %}
+            <p class="error-message">{{ error_message }}</p>
             {% endif %}
             <div class="back-button">
                 <a href="{% url 'home' %}">Back to Main Page</a>

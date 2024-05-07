@@ -18,28 +18,25 @@
             padding: 20px;
             text-align: center;
             margin-top: 0;
+            margin-bottom: 20px; /* Add margin to separate from the content */
         }
 
-        .container {
+        .main-container {
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column; /* Align items vertically */
         }
 
-        .form-container {
+        .clock-content {
             background-color: #ffffff;
             padding: 20px;
-            border-radius: 5px;
-            margin-top: 20px; 
+            margin-top: 20px;
         }
 
-        .form-container h2 {
-            margin-top: 0;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
+        .error-message {
+            color: red;
+            text-align: center;
         }
 
         input[type="text"],
@@ -63,38 +60,27 @@
         button:hover {
             background-color: #2980b9;
         }
-
-        .success-message {
-            color: green;
-            text-align: center;
-            margin-top: 10px;
-            display: {% if success %}block{% else %}none{% endif %}; /* Show only if success is True */
-        }
-
-        .back-button {
-            margin-top: 20px;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
     <h1>CLOCK IN</h1>
 
-    <div class="container">
-        <div class="form-container">
-            <h2>Clock In</h2>
-            <form action="" method="post">
+    <div class="main-container">
+        <div class="clock-content">
+            <form method="post">
                 {% csrf_token %}
                 <label for="employee_id">Employee ID:</label>
-                <input type="text" id="employee_id" name="employee_id" required><br><br>
+                <input type="text" id="employee_id" name="employee_id" placeholder="Enter employee ID" required><br><br>
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required><br><br>
-                <button type="submit">Clock-in</button>
+                <input type="password" id="password" name="password" placeholder="Enter password" required><br><br>
+                <button type="submit">Clock In</button>
             </form>
-            <div class="success-message">You have successfully clocked in.</div>
-            <div class="back-button">
-                <a href="{% url 'home' %}">Back to Main Page</a>
-            </div>
+            
+            {% if messages %}
+            {% for message in messages %}
+            <p class="error-message">{{ message }}</p>
+            {% endfor %}
+            {% endif %}
         </div>
     </div>
 </body>
