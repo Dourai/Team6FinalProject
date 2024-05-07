@@ -10,7 +10,6 @@ class LoginForm(forms.Form):
         employee_id = cleaned_data.get('employee_id')
         password = cleaned_data.get('password')
 
-        print(employee_id, password, 'AAAAAAAAA')
         if not employee_id:
             raise ValidationError('Employee id is required')
 

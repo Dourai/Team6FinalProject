@@ -31,51 +31,42 @@ def management_options(request):
 @login_required(login_url='/login')
 def clock_in(request):
     if request.method == 'POST':
-        employee_id = request.POST.get('employee_id')
-        password = request.POST.get('password')
-        
-        try:
-            employee = Employee.objects.get(employee_id=employee_id)
-            if employee.password == password:
-                # Clock in the employee
-                Shift.objects.create(employee=employee, date=date.today(), start_time=timezone.now())
-                messages.success(request, 'You have successfully clocked in.')
-                return redirect('clock_out')  # Redirect to clock-out page after successful clock-in
-            else:
-                messages.error(request, 'Incorrect password.')
-        except Employee.DoesNotExist:
-            messages.error(request, 'Employee not found.')
-    
-    return render(request, 'clock_in.html')
+        shift, created = request.user.shifts.get_or_create(date=date.today())
+
+        if created:
+            shift.start_time = timezone.now()
+            shift.save()
+            messages.success(request, 'You have successfully clocked in.')
+            return redirect('clock_out')
+        else:
+            messages.error(request, 'You have already clocked in today.')
+
+    return render(request, 'clock_in.html', {'messages': messages.get_messages(request)})
+
 
 @login_required(login_url='/login')
 def clock_out(request):
     if request.method == 'POST':
-        employee_id = request.POST.get('employee_id')
-        password = request.POST.get('password')
-        
         try:
-            employee = Employee.objects.get(employee_id=employee_id)
-            if employee.password == password:
-                current_shift = Shift.objects.filter(employee=employee, date=date.today()).latest('start_time')
-                current_shift.end_time = datetime.now().time()
-                current_shift.save()
+            shift = request.user.shifts.get(date=date.today())
+            if shift.end_time is None:
+                shift.end_time = timezone.now()
+                shift.save()
                 messages.success(request, 'You have successfully clocked out.')
-                return redirect('/home')  # Redirect to home page after successful clock-out
             else:
-                messages.error(request, 'Invalid password.')
-        except Employee.DoesNotExist:
-            messages.error(request, 'Employee not found.')
-    
-    error_messages = [str(message) for message in messages.get_messages(request)]  # Convert messages to a list of strings
-    return render(request, 'clock_out.html', {'error_message': error_messages})
+                messages.error(request, 'You have already clocked out today.')
+        except Shift.DoesNotExist:
+            messages.error(request, 'You have not clocked in today.')
+
+    return render(request, 'clock_out.html', {'messages': messages.get_messages(request)})
+
 
 @login_required(login_url='/login')
 def employee_information(request):
     if request.method == 'POST':
         employee_id = request.POST.get('employee_id')
         password = request.POST.get('password')
-        
+
         try:
             employee = Employee.objects.get(employee_id=employee_id)
             if employee.password == password:
@@ -93,7 +84,7 @@ def employee_information(request):
                 'found': False,
                 'error_message': 'Employee not found.'
             }
-        
+
         return render(request, 'employee_info.html', context)
 
     return render(request, 'employee_info.html')
@@ -165,7 +156,7 @@ def add_employee(request):
             department = request.POST.get('department')
             wage = request.POST.get('wage')
             avg_hours_per_week = request.POST.get('avg_hours_per_week')
-            
+
             new_employee = Employee(
                 name=name,
                 employee_id=employee_id,
@@ -196,7 +187,6 @@ def about(request):
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
-        print('aaaaa', form.is_valid())
         if form.is_valid():
             employee_id = form.cleaned_data.get('employee_id')
             password = form.cleaned_data.get('password')

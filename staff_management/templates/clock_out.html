@@ -1,102 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clock Out</title>
-    <!-- CSS styles -->
-    <style>
-        /* CSS styles */
-        body {
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
+{% extends 'base.html' %}
+{% load static %}
 
-        h1 {
-            background-color: #3498db;
-            color: black;
-            padding: 20px;
-            text-align: center;
-            margin-top: 0;
-        }
-
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .form-container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 5px;
-            margin-top: 20px; 
-        }
-
-        .form-container h2 {
-            margin-top: 0;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #3498db;
-            color: black;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #2980b9;
-        }
-
-        .error-message {
-            color: red;
-            text-align: center;
-            margin-top: 10px;
-            display: {% if error_message %}block{% else %}none{% endif %};
-        }
-
-        .back-button {
-            margin-top: 20px;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <h1>CLOCK OUT</h1>
-
-    <div class="container">
-        <div class="form-container">
-            <h2>Clock Out</h2>
-            <form action="{% url 'clock_out' %}" method="post">
-                {% csrf_token %}
-                <label for="employee_id">Employee ID:</label>
-                <input type="text" id="employee_id" name="employee_id" required><br><br>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required><br><br>
-                <button type="submit">Clock-out</button>
-            </form>
-            <div class="error-message">{{ error_message }}</div>
-            <div class="back-button">
-                <a href="{% url 'home' %}">Back to Main Page</a>
-            </div>
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2 class="text-center">Clock Out</h2>
         </div>
     </div>
-</body>
-</html>
+    <div class="row">
+        <div class="col">
+            {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-lg btn-block" name="clock_in">End Shift</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
