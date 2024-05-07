@@ -1,75 +1,112 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Employee</title>
+    <!-- CSS styles -->
     <style>
         /* CSS styles */
+        body {
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
         h1 {
             background-color: #3498db;
             color: black;
             padding: 20px;
             text-align: center;
+            margin-top: 0;
         }
 
-        .button {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 20px;
-            border: none;
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
             border-radius: 5px;
-            cursor: pointer;
-            margin: 10px;
+            margin-top: 20px; 
         }
 
-        .button:hover {
+        .form-container h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: black;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
             background-color: #2980b9;
         }
 
-        .input-field {
-            padding: 10px;
-            margin: 10px;
-            width: 300px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+            display: {% if error_message %}block{% else %}none{% endif %};
         }
 
-        /* Additional styles for back button */
         .back-button {
-            background-color: white;
-            color: black;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block; /* Make the back button inline */
-            margin-bottom: 20px; /* Adjusted to add space between back button and other elements */
-        }
-
-        .back-button:hover {
-            background-color: #ccc; /* Change the hover background color */
+            margin-top: 20px;
+            text-align: center;
         }
     </style>
 </head>
-
 <body>
-    <h1>Add Employee</h1>
+    <h1>ADD EMPLOYEE</h1>
 
-    <div>
-        <img src="newuser.png" alt="New User Image" style="width: 200px; height: auto;">
-    </div>
-
-    <!-- Back button -->
-    <a href="#" class="button back-button" onclick="window.history.back()">Back</a>
-
-    <div style="text-align: center; margin-top: 20px;">
-        <form action="{% url 'add_employee' %}" method="post">
-            {% csrf_token %}
-            <input type="text" name="employee_id" placeholder="Enter Employee ID" class="input-field">
-            <button type="submit" class="button">Confirm</button>
-        </form>
+    <div class="container">
+        <div class="form-container">
+            <h2>Add Employee</h2>
+            <form action="/add_employee/" method="post"> <!-- Updated form action -->
+                {% csrf_token %}
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="employee_id">Employee ID:</label>
+                <input type="text" id="employee_id" name="employee_id" required><br><br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br><br>
+                <label for="tenure">Tenure:</label>
+                <input type="text" id="tenure" name="tenure" required><br><br>
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department" required><br><br>
+                <label for="wage">Wage:</label>
+                <input type="text" id="wage" name="wage" required><br><br>
+                <label for="avg_hours_per_week">Average Hours Per Week:</label>
+                <input type="text" id="avg_hours_per_week" name="avg_hours_per_week" required><br><br>
+                <button type="submit">Add Employee</button>
+            </form>
+            <div class="error-message">{{ error_message }}</div>
+            <div class="back-button">
+                <a href="{% url 'home' %}">Back to Main Page</a>
+            </div>
+        </div>
     </div>
 </body>
-
 </html>

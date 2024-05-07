@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clock In</title>
+    <title>Clock Out</title>
+    <!-- CSS styles -->
     <style>
         /* CSS styles */
         body {
@@ -64,11 +65,11 @@
             background-color: #2980b9;
         }
 
-        .success-message {
-            color: green;
+        .error-message {
+            color: red;
             text-align: center;
             margin-top: 10px;
-            display: {% if success %}block{% else %}none{% endif %}; /* Show only if success is True */
+            display: {% if error_message %}block{% else %}none{% endif %};
         }
 
         .back-button {
@@ -83,7 +84,7 @@
     <div class="container">
         <div class="form-container">
             <h2>Clock Out</h2>
-            <form action="" method="post">
+            <form action="{% url 'clock_out' %}" method="post">
                 {% csrf_token %}
                 <label for="employee_id">Employee ID:</label>
                 <input type="text" id="employee_id" name="employee_id" required><br><br>
@@ -91,7 +92,7 @@
                 <input type="password" id="password" name="password" required><br><br>
                 <button type="submit">Clock-out</button>
             </form>
-            <div class="success-message">You have successfully clocked out.</div>
+            <div class="error-message">{{ error_message }}</div>
             <div class="back-button">
                 <a href="{% url 'home' %}">Back to Main Page</a>
             </div>
