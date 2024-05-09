@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,19 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
         /* CSS styles */
-        body {
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            background-color: #3498db;
-            color: black;
-            padding: 20px;
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 20px;
-        }
+        
         .form-container {
             width: 90%; 
             max-width: 600px; 
@@ -44,37 +36,20 @@
             border-radius: 5px;
             box-sizing: border-box; 
         }
-        .form-container input[type="submit"] {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+        
         .form-container input[type="submit"]:hover {
             background-color: #2980b9;
         }
 
-        /* Additional styles for back button */
-        .back-button {
-            background-color: white;
-            color: black;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 20px;
-        }
-
-        .back-button:hover {
-            background-color: #ccc; /* Change the hover background color */
-        }
     </style>
 </head>
 <body>
-    <h1>REQUEST SCHEDULE CHANGE</h1>
-    <a href="#" class="back-button" onclick="history.back()">Back</a> <!-- Added back button -->
+    <div class="row">
+        <div class="col">
+            <a href="/schedule/">👈 go back</a>
+            <h2 class="text-center">Request Schedule Change</h2>
+        </div>
+    </div>
     <div class="form-container">
         <form method="post" action="">
             {% csrf_token %}
@@ -82,7 +57,7 @@
             <input type="text" id="reason" name="reason" required>
             <label for="date">Date(s) Requested:</label>
             <input type="text" id="date" name="new_schedule_date" placeholder="Select date(s)" required class="date-picker">
-            <input type="submit" value="Submit Request">
+            <input type="submit" value="Submit Request" class="btn btn-primary btn-lg btn-block">
         </form>
     </div>
     <!-- Flatpickr script for schedule dates -->
@@ -98,3 +73,5 @@
         });
     </script>
 </body>
+</html>
+{% endblock %}

@@ -1,87 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clock In</title>
-    <style>
-        /* CSS styles */
-        body {
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
+{% extends 'base.html' %}
+{% load static %}
 
-        h1 {
-            background-color: #3498db;
-            color: black;
-            padding: 20px;
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 20px; /* Add margin to separate from the content */
-        }
-
-        .main-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column; /* Align items vertically */
-        }
-
-        .clock-content {
-            background-color: #ffffff;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .error-message {
-            color: red;
-            text-align: center;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #3498db;
-            color: black;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #2980b9;
-        }
-    </style>
-</head>
-<body>
-    <h1>CLOCK IN</h1>
-
-    <div class="main-container">
-        <div class="clock-content">
-            <form method="post">
-                {% csrf_token %}
-                <label for="employee_id">Employee ID:</label>
-                <input type="text" id="employee_id" name="employee_id" placeholder="Enter employee ID" required><br><br>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Enter password" required><br><br>
-                <button type="submit">Clock In</button>
-            </form>
-            
-            {% if messages %}
-            {% for message in messages %}
-            <p class="error-message">{{ message }}</p>
-            {% endfor %}
-            {% endif %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <a href="/">👈 go back</a>
+            <h2 class="text-center">Clock In</h2>
         </div>
     </div>
-</body>
-</html>
+    <div class="row">
+        <div class="col">
+            {% include 'shift_info.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-lg btn-block" name="clock_in">Start Shift</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

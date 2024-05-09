@@ -1,132 +1,77 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Information</title>
-    <style>
-        /* CSS styles */
-        body {
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
+{% extends 'base.html' %}
+{% load static %}
 
-        h1 {
-            background-color: #3498db;
-            color: black;
-            padding: 20px;
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 20px; /* Add margin to separate from the content */
-        }
-
-        .main-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column; /* Align items vertically */
-        }
-
-        .info-content {
-            background-color: #ffffff;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .info-item {
-            margin-bottom: 10px;
-        }
-
-        .info-label {
-            font-weight: bold;
-        }
-
-        .info-value {
-            margin-left: 10px;
-        }
-        
-        .error-message {
-            color: red;
-            text-align: center;
-        }
-
-        .back-button {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #3498db;
-            color: black;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #2980b9;
-        }
-    </style>
-</head>
-<body>
-    <h1>EMPLOYEE INFORMATION</h1>
-
-    <div class="main-container">
-        <div class="info-content">
-            <form method="post">
-                {% csrf_token %}
-                <label for="employee_id">Employee ID:</label>
-                <input type="text" id="employee_id" name="employee_id" placeholder="Enter employee ID" required><br><br>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Enter password" required><br><br>
-                <button type="submit">Search</button>
-            </form>
-            
-            {% if found %}
-            <div id="employee-info">
-                <div class="info-item">
-                    <span class="info-label">Name:</span>
-                    <span class="info-value">{{ employee.name }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Employee ID:</span>
-                    <span class="info-value">{{ employee.employee_id }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Tenure:</span>
-                    <span class="info-value">{{ employee.tenure }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Department:</span>
-                    <span class="info-value">{{ employee.department }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Wage:</span>
-                    <span class="info-value">{{ employee.wage }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Average Hours Per Week:</span>
-                    <span class="info-value">{{ employee.avg_hours_per_week }}</span>
-                </div>
-            </div>
-            {% elif error_message %}
-            <p class="error-message">{{ error_message }}</p>
-            {% endif %}
-            <div class="back-button">
-                <a href="{% url 'home' %}">Back to Main Page</a>
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <a href="/">👈 go back</a>
+            <div style="margin-top: 40px; display: flex; align-items: center; justify-content: center; gap: 16px;">
+                <h2 class="text-center" style="margin: 0">
+                    Employee Information
+                </h2>
+                <a href="{% url 'employee_name_update' user.id %}">✎ Edit name</a>
+                <a href="{% url 'employee_password_update' user.id %}">✎ Edit password</a>
             </div>
         </div>
     </div>
-</body>
-</html>
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <tr>
+                    <th>Username</th>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ user.name }}</td>
+                </tr>
+                <tr>
+                    <th>Tenure</th>
+                    <td>{{ user.tenure }}</td>
+                </tr>
+                <tr>
+                    <th>Department</th>
+                    <td>{{ user.department }}</td>
+                </tr>
+                <tr>
+                    <th>Wage</th>
+                    <td>{{ user.wage }}</td>
+                </tr>
+                <tr>
+                    <th>Average Hours Per Week</th>
+                    <td>{{ user.avg_hours_per_week }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center" style="margin-top:40px;">Shift History</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for shift in user.shifts.all %}
+                    <tr>
+                        <td>{{ shift.date }}</td>
+                        <td>{{ shift.start_time }}</td>
+                        <td>{{ shift.end_time }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No shift history.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

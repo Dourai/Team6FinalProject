@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <a href="{% url 'employee_information' %}">👈 go back</a>
+        <div style="margin-top: 40px; display: flex; align-items: center; justify-content: center; gap: 16px;">
+            <h2 class="text-center" style="margin: 0">
+                Update Employee Information
+            </h2>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <form method="post" style="width: 420px; display: flex; flex-direction: column; gap: 22px;">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_name" style="margin-bottom: 8px; font-weight: bold;">Name</label>
+                <input type="text" class="form-control form-control-lg" id="id_name" name="{{ form.name.name }}" placeholder="Enter name" value="{{ form.name.value|default_if_none:'' }}" required>
+            </div>
+            <input type="submit" class="btn btn-primary btn-lg" value="Update">
+        </form>
+
+        {% if form.password.errors %}
+            <div class="alert alert-danger" style="margin-top: 20px;">
+                {{ form.password.errors }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
