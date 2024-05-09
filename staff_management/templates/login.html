@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login</title>
+
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+        <style>
+            .form-signin {
+                max-width: 330px;
+                padding-top: 150px;
+            }
+        </style>
+    </head>
+    <body class="d-flex align-items-center py-4 bg-body-tertiary">
+
+        <main class="form-signin w-100 m-auto">
+            <form method="post">
+                {% csrf_token %}
+                <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="employeeId" name="employee_id" placeholder="123456" />
+                    <label for="employeeId">Employee ID</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+                    <label for="password">Password</label>
+                </div>
+
+                <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Sign in</button>
+                <p class="mt-5 mb-3 text-body-secondary">© Team6</p>
+            </form>
+
+
+            {% if form.errors %}
+                <div class="alert alert-danger" style="margin-top: 20px;">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+        </main>
+    </body>
+</html>
