@@ -35,6 +35,8 @@ urlpatterns = [
     path('remove-employee/', views.remove_employee, name='remove_employee'),
     path('accounts/login/', views.login_view, name='login'),
     path('accounts/logout/', views.logout_view, name='logout'),
+    path('accounts/update-name/<int:pk>', views.EmployeeNameUpdateView.as_view(), name='employee_name_update'),
+    path('accounts/update-password/<int:pk>', views.EmployeePasswordUpdateView.as_view(), name='employee_password_update'),
     path('admin/login/', views.go_to_custom_login),
     path('admin/logout/', views.go_to_custom_logout),
     path('admin/', admin.site.urls),

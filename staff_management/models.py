@@ -3,6 +3,7 @@ from datetime import datetime
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.db import models
 
+# Customize user manager to work with our custom user model
 class UserManager(BaseUserManager):
     def create_user(self, username, name, tenure, department, wage, avg_hours_per_week, password=None):
         if not username:
@@ -16,11 +17,13 @@ class UserManager(BaseUserManager):
             wage=wage,
             avg_hours_per_week=avg_hours_per_week,
         )
-
+        # Convert plain text password to a hash before saving
         user.set_password(password)
+        # Save the user to the database
         user.save(using=self._db)
         return user
 
+    # Override the create_superuser method to create a superuser (super employees with all permissions)
     def create_superuser(self, username, name, tenure, department, wage, avg_hours_per_week, password):
         user = self.create_user(
             username,
@@ -38,6 +41,8 @@ class UserManager(BaseUserManager):
         return user
 
 class Employee(AbstractBaseUser, PermissionsMixin):
+    # We want to extend Django's built-in User model, so we are using AbstractBaseUser
+    # and PermissionsMixin to add the necessary permissions
     username = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=100)
     tenure = models.IntegerField()

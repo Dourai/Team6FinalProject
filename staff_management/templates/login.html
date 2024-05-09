@@ -35,6 +35,13 @@
                 <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Sign in</button>
                 <p class="mt-5 mb-3 text-body-secondary">© Team6</p>
             </form>
+
+
+            {% if form.errors %}
+                <div class="alert alert-danger" style="margin-top: 20px;">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
         </main>
     </body>
 </html>

@@ -42,7 +42,7 @@
                 {% endif %}
 
                 <span>|</span>
-                <p style="display: flex; align-items: center; gap: 8px;"> Hello <strong>{{ user.username }}</strong> <small>(<a href="{% url 'logout' %}">Log out</a>)</small> </p>
+                <p style="display: flex; align-items: center; gap: 8px;"> Hello <strong>{{ user.name }}</strong> <small>(<a href="{% url 'logout' %}">Log out</a>)</small> </p>
             {% else %}
                 <a href="{% url 'login' %}"> Please login </a>
             {% endif %}
