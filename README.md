@@ -48,3 +48,6 @@ The Staff Management System is a web application that allows administrations to 
   - Python 3.8.5
   - Django
   - SQLite
+
+# Demo site
+http://thinguyen.pythonanywhere.com/
