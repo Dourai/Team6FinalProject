@@ -18,7 +18,7 @@ The Staff Management System is a web application that allows administrations to 
 2. Navigate to the `staff_management` project directory
 3. Run the following command to create virtual environment:
    ```
-   python -m venv myenv
+   python -m venv myvenv
    ```
 4. Run the following command to activate the virtual environment:
    ```
