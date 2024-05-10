@@ -23,7 +23,7 @@ The Staff Management System is a web application that allows administrations to 
 4. Run the following command to activate the virtual environment:
    ```
     source ./myenv/bin/activate (Linux)
-    .\myenv\Scripts\activate (Windows)
+    .\myvenv\Scripts\activate (Windows)
    ```
 4. Run the following command to create a superuser: (optional - you will be asked for: username, name, password, ternue, department, wage, and avg_hours_per_week)
    ```
